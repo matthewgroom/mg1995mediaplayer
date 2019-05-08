@@ -1,0 +1,21 @@
+@import model.Playlist
+
+@(playlists: Seq[Playlist])
+@main("My music player") {
+  <table class="space">
+    <thead>
+      <tr>
+        <th>Playlist Name</th>
+      </tr>
+    </thead>
+    <tbody>
+    @for(playlist <- playlists) {
+      <tr class ="song">
+        <td><a href="/player/@{playlist.name}">@{
+          playlist.name
+        }</a></td>
+      </tr>
+    }
+    </tbody>
+  </table>
+}

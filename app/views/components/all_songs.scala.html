@@ -1,0 +1,39 @@
+@import model.Song
+
+@(songs: Seq[Song])
+<table class="space">
+  <thead>
+    <tr>
+      <th>Song Title</th>
+      <th>Song Artist</th>
+      <th>Album</th>
+      <th>Song Release Date</th>
+    </tr>
+  </thead>
+  <tbody>
+  @for(song <- songs) {
+    <tr class ="song">
+      <td>
+      @{
+        song.title
+      }
+      </td>
+      <td>
+      @{
+        song.album
+      }
+      </td>
+      <td>
+      @{
+        song.artistName
+      }
+      </td>
+      <td>
+      @{
+        song.yearCreated
+      }
+      </td>
+    </tr>
+  }
+  </tbody>
+</table>

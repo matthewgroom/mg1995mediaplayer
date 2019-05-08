@@ -1,0 +1,16 @@
+@import model.Song
+
+@(songs: Seq[Song])
+@main("Create Playlist") {
+  <div id="project-wrapper">
+    <div id="project-container">
+      <div id="overlay"></div>
+      <div id="content">
+        <h2>Create Your New playlist</h2>
+        <h3>Make it yours!</h3>
+        @components.all_songs(songs)
+      </div>
+    </div>
+  </div>
+  <h1 id="signature">MG95</h1>
+}

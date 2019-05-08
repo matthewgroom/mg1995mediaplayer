@@ -1,0 +1,31 @@
+@import model.Playlist
+
+@(playlist: Playlist)
+
+@for(songs <- playlist.songs) {
+
+  @main("My music player") {
+    <div id="project-wrapper">
+      <div id="project-container">
+        <div id="overlay"></div>
+        <div id="content">
+          <h2>My Music Player</h2>
+          <h3>Main Playlist</h3>
+          <div id="controls">
+            <div class="column"><i class="fa fa-refresh" aria-hidden="true"></i></div>
+            <audio src="" controls id="audioPlayer">
+              Bla bla bla!
+            </audio>
+            <div class="column active list__link"><i class="fa fa-random" aria-hidden="true"></i></div>
+          </div>
+          @components.playlist_song_table(playlist)
+        </div>
+        <script>
+                audioPlayer();
+        </script>
+      </div>
+    </div>
+    <h1 id="signature">MG95</h1>
+
+  }
+}
