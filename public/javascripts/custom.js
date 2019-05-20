@@ -35,7 +35,23 @@ function audioPlayer() {
         $("#audioPlayer")[0].src = $(".song td a")[currentSong].href;
         $("#audioPlayer")[0].play();
     });
+
+    function sleepMode() {
+        setTimeout(function () {
+            $("body").animate({opacity: 0.20}, 2000, function() { });
+            sleepMode();
+        }, 30000);
+    }
+
+    $("body").mousemove(function(event) {
+        $("body").animate({opacity: 1}, 0, function() {});
+    });
+
+    sleepMode();
 }
+
+
+
 
 // function shuffle(a) {
 //   for (let i = a.length - 1; i > 0; i--) {

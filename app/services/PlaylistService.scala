@@ -2,18 +2,16 @@ package services
 
 import com.google.inject.Inject
 import model.{Playlist, Song}
-import play.api.libs.json.{JsSuccess, JsValue, Json}
-import play.api.mvc.{AbstractController, Action, ControllerComponents, Result}
-import reactivemongo.api.commands.{DefaultWriteResult, UpdateWriteResult}
+import play.api.mvc.{AbstractController, ControllerComponents}
 import reactivemongo.io.netty.util.concurrent.Future
 import repository.PlaylistRepo
 
-import scala.util.Random
 import scala.concurrent.ExecutionContext
-import scala.util.{Failure, Success}
+import scala.util.{Failure, Random, Success}
 
 class PlaylistService @Inject()(components: ControllerComponents,
-                                playlistRepo: PlaylistRepo) extends AbstractController(components) {
+                                playlistRepo: PlaylistRepo,
+                                catalogueService: CatalogueService) extends AbstractController(components) {
 
   implicit val ec = ExecutionContext.global
 
@@ -43,8 +41,22 @@ class PlaylistService @Inject()(components: ControllerComponents,
     playlistRepo.findAllPlaylists()
   }
 
-  def returnAllSongs() = {
-    playlistRepo.findAllPlaylists.map(playlist => playlist.flatMap(_.songs))
-  }
+//  def returnAllSongs() = {
+//    playlistRepo.findAllPlaylists().map(playlist => playlist.flatMap(_.songs))
+//  }
 
+//  def findSingleSong(songTitle: String) = {
+//    catalogueService.returnSingleSong(songTitle).map(song => List(song))
+//  }
+//
+//  def findPlaylist(playlistTitle: String) = {
+//    playlistRepo.findPlaylist(playlistTitle)
+//  }
+//
+//  def updatePlaylist(playlistTitle: String, songTitle: String) = {
+//    val song = findSingleSong(songTitle)
+//    findPlaylist(playlistTitle).map {
+//      case Some(playlist) => playlist.songs
+//    }
+//  }
 }

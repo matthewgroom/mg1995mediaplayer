@@ -1,6 +1,8 @@
 @import model.Song
+@import model.EmptyPlaylist
+@import helper._
 
-@(songs: Seq[Song])
+@(songs: Seq[Song], emptyPlaylistForm: Form[EmptyPlaylist])
 @main("Create Playlist") {
   <div id="project-wrapper">
     <div id="project-container">
@@ -8,7 +10,12 @@
       <div id="content">
         <h2>Create Your New playlist</h2>
         <h3>Make it yours!</h3>
-        @components.all_songs(songs)
+        @helper.form(routes.HomeController.createEmptyPlaylist) {
+          <input type="text" id="name" name="name" value="">
+          <button type="submit">Create Playlist</button>
+        }
+      </div>
+      <div>
       </div>
     </div>
   </div>

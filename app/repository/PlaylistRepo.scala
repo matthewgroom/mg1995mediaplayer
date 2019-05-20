@@ -3,7 +3,7 @@ package repository
 import java.util.concurrent
 
 import javax.inject.Inject
-import model.Playlist
+import model.{Playlist, Song}
 import model.Playlist._
 import play.api.db
 import play.api.libs.json.{JsObject, Json, Reads}
@@ -29,7 +29,7 @@ class PlaylistRepo @Inject()(components: ControllerComponents,
     collection.flatMap(_.insert.one(playlist))
   }
 
-  def findAllPlaylists() = {
+  def findAllPlaylists():Future[Seq[Playlist]] = {
     collection.flatMap(_.find(Json.obj(), Some(BSONDocument.empty)).cursor[Playlist]().collect[Seq](200000, Cursor.FailOnError[Seq[Playlist]]()))
   }
 

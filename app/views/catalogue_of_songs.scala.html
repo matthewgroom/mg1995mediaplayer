@@ -1,0 +1,46 @@
+@import model.Song
+
+@(emptyPlaylistName: String, songs: Seq[Song])
+@main("Select songs for your playlist"){
+  <div id="project-wrapper">
+    <div id="project-container">
+      <div id="overlay"></div>
+      <div id="content">
+        <h2>Select songs for you playlist</h2>
+        <h3>Choose wisely</h3>
+        <h3>@emptyPlaylistName</h3>
+        <table class="space">
+          <thead>
+            <tr>
+              <th>Song Title</th>
+              <th>Song Artist</th>
+              <th>Album</th>
+              <th>Song Release Date</th>
+            </tr>
+          </thead>
+          <tbody>
+          @for(song <- songs) {
+            <tr class ="song">
+              <td>
+                <a href="/insert-song-to-playlist/@{emptyPlaylistName}/@{song.title}">@{song.title}</a>
+              </td>
+              <td>
+              @{song.album}
+              </td>
+              <td>
+              @{song.artistName}
+              </td>
+              <td>
+              @{song.yearCreated}
+              </td>
+            </tr>
+          }
+          </tbody>
+        </table>
+      </div>
+      <div>
+      </div>
+    </div>
+  </div>
+  <h1 id="signature">MG95</h1>
+}

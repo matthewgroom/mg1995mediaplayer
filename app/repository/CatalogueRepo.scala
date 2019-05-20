@@ -3,8 +3,8 @@ package repository
 import java.util.concurrent
 
 import javax.inject.Inject
-import model.Playlist
-import model.Playlist._
+import model.{Catalogue, Song}
+import model.Catalogue._
 import play.api.db
 import play.api.libs.json.{JsObject, Json, Reads}
 import play.api.mvc.{AbstractController, ControllerComponents, Result}
@@ -25,8 +25,12 @@ class CatalogueRepo @Inject()(components: ControllerComponents,
 
   implicit def collection: Future[JSONCollection] = database.map(_.collection[JSONCollection]("catalogue"))
 
-  def createCatalogue():Future[Result] = {
-    ???
+  def createCatalogue(catalogue: Catalogue): Future[WriteResult] = {
+    collection.flatMap(_.insert.one(catalogue))
+  }
+
+  def returnCatalogue() = {
+    collection.flatMap(_.find(Json.obj(), Some(BSONDocument.empty)).cursor[Catalogue]().collect[Seq](20000, Cursor.FailOnError[Seq[Catalogue]]()))
   }
 
 }
