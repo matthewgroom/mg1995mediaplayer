@@ -1,0 +1,33 @@
+@import model.Song
+@import model.Playlist
+@(playlist: Playlist, songs: List[Song])
+
+  @main("My music player") {
+    <div id="project-wrapper">
+      <div id="project-container">
+        <div id="overlay">
+          <div id="content">
+            <h2>@playlist.name</h2>
+            <h3>Click on the song you want to play.</h3>
+            <div id="controls">
+              <audio src="" controls id="audioPlayer">
+                If you're reading this your browser does not support my player.
+              </audio>
+              <button onclick="window.location.href='/shuffle';"class="column active list__link "><i class="fa fa-random" aria-hidden="true"></i></button>
+            </div>
+            <div class="scrollbar">
+              <div class="force-overflow">
+                @components.playlist_song_table(songs)
+              </div>
+            </div>
+            <a class="listViaSong" href="/list-via-song/@{playlist.name}">|| List By Song ||</a>
+            <a class="createPlaylistButton" href="/create-playlist-page">|| Create New Playlist</a>
+          </div>
+          <script>
+                  audioPlayer();
+          </script>
+        </div>
+      </div>
+    </div>
+    <h1 id="signature">MG95</h1>
+  }

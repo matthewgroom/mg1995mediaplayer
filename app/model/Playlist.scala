@@ -3,7 +3,7 @@ package model
 import play.api.libs.json.{Json, OWrites, Reads}
 
 
-case class Playlist(name: String, songs: List[Song])
+case class Playlist(id: Int, name: String, songs: List[Song])
 
 object Playlist {
 

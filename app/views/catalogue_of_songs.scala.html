@@ -1,6 +1,8 @@
 @import model.Song
+@import model.Playlist
 
-@(emptyPlaylistName: String, songs: Seq[Song])
+@import model.Catalogue
+@(playlist: Playlist, catalogueSongs: Seq[Song])
 @main("Select songs for your playlist"){
   <div id="project-wrapper">
     <div id="project-container">
@@ -8,7 +10,8 @@
       <div id="content">
         <h2>Select songs for you playlist</h2>
         <h3>Choose wisely</h3>
-        <h3>@emptyPlaylistName</h3>
+        <h3>@playlist.name</h3>
+        <div class="scrollbar">
         <table class="space">
           <thead>
             <tr>
@@ -19,10 +22,10 @@
             </tr>
           </thead>
           <tbody>
-          @for(song <- songs) {
+          @for(song <- catalogueSongs) {
             <tr class ="song">
               <td>
-                <a href="/insert-song-to-playlist/@{emptyPlaylistName}/@{song.title}">@{song.title}</a>
+                <a href="/insert-song-to-playlist/@{playlist.id}/@{song.id}">@{song.title}</a>
               </td>
               <td>
               @{song.album}
@@ -37,8 +40,8 @@
           }
           </tbody>
         </table>
-      </div>
-      <div>
+        </div>
+        <a class="createPlaylistButton" href="/">|| Return To Playlists</a>
       </div>
     </div>
   </div>

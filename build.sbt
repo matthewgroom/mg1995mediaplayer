@@ -17,7 +17,8 @@ libraryDependencies ++= Seq(
   specs2 % Test ,
   guice,
   "org.reactivemongo" %% "play2-reactivemongo" % "0.16.4-play26",
-  "com.typesafe.play" %% "play-json" % "2.7.1"
+  "com.typesafe.play" %% "play-json" % "2.7.1",
+  "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0" % "test"
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

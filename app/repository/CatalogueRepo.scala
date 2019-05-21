@@ -33,4 +33,11 @@ class CatalogueRepo @Inject()(components: ControllerComponents,
     collection.flatMap(_.find(Json.obj(), Some(BSONDocument.empty)).cursor[Catalogue]().collect[Seq](20000, Cursor.FailOnError[Seq[Catalogue]]()))
   }
 
+  def getSongFromCatalogue(id: Int): Future[Option[Song]] = {
+    collection.flatMap(_.find(Json.obj(), Option.empty[JsObject]).one[Catalogue]) flatMap {
+      case Some(catalogue) => Future.successful(Some(catalogue.songs.filter(_.id == id).head))
+      case None => Future.successful(None)
+    }
+  }
+
 }

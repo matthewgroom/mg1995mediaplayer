@@ -3,7 +3,7 @@ package services
 import com.google.inject.Inject
 import model.{Playlist, Song}
 import play.api.mvc.{AbstractController, ControllerComponents}
-import reactivemongo.io.netty.util.concurrent.Future
+import scala.concurrent.Future
 import repository.PlaylistRepo
 
 import scala.concurrent.ExecutionContext
@@ -17,8 +17,8 @@ class PlaylistService @Inject()(components: ControllerComponents,
 
   def createPlaylist(playlist: Playlist)= playlistRepo.createPlaylist(playlist).map(_.ok)
 
-  def getPlaylist(playlistName: String) = {
-    playlistRepo.findPlaylist(playlistName)
+  def getPlaylist(id: Int) = {
+    playlistRepo.findPlaylist(id)
   }
 
   def shuffle(playlist: Playlist, random: Random):Song = {
@@ -26,8 +26,8 @@ class PlaylistService @Inject()(components: ControllerComponents,
     Random.shuffle(songs).head
   }
 
-  def updatePlaylist(playlistName: String, newPlaylist: Playlist) = {
-    playlistRepo.updatePlaylist(playlistName, newPlaylist).map {
+  def updatePlaylist(id: Int, newPlaylist: Playlist) = {
+    playlistRepo.updatePlaylist(id, newPlaylist).map {
       case Some(_) => Success
       case None    => Failure
     }
@@ -39,6 +39,13 @@ class PlaylistService @Inject()(components: ControllerComponents,
 
   def returnAllPlaylist() = {
     playlistRepo.findAllPlaylists()
+  }
+
+  def insertSongToPlaylist(playlistId: Int, songId: Int): Future[Option[Playlist]] = {
+    catalogueService.getSongFromCatalogue(songId).flatMap {
+      case Some(song) => playlistRepo.insertSongToPlaylist(playlistId, song)
+      case None       => playlistRepo.findPlaylist(playlistId)
+    }
   }
 
 //  def returnAllSongs() = {

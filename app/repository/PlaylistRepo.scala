@@ -33,22 +33,37 @@ class PlaylistRepo @Inject()(components: ControllerComponents,
     collection.flatMap(_.find(Json.obj(), Some(BSONDocument.empty)).cursor[Playlist]().collect[Seq](200000, Cursor.FailOnError[Seq[Playlist]]()))
   }
 
-  def findPlaylist(playlistName: String): Future[Option[Playlist]] = {
-    collection.flatMap(_.find(Json.obj(fields = "name" -> playlistName), Option.empty[JsObject]).one[Playlist])
+  def findPlaylist(id: Int): Future[Option[Playlist]] = {
+    collection.flatMap(_.find(Json.obj(fields = "id" -> id), Option.empty[JsObject]).one[Playlist])
   }
 
-  def updatePlaylistHelper(col: JSONCollection, playlist: Playlist, playlistName: String): Future[Option[Playlist]] = {
-    val query = Json.obj(fields = "name" -> playlistName)
+  def updatePlaylistHelper(col: JSONCollection, playlist: Playlist, id: Int): Future[Option[Playlist]] = {
+    val query = Json.obj(fields = "id" -> id)
     col.findAndUpdate(selector = query, update = playlist, fetchNewObject = false, upsert = true).map(_.result[Playlist])
   }
 
-  def updatePlaylist(playlistName: String, playlist: Playlist): Future[Option[Playlist]] = {
-    collection.flatMap(col => updatePlaylistHelper(col,playlist, playlistName))
+  def updatePlaylist(id: Int, playlist: Playlist): Future[Option[Playlist]] = {
+    collection.flatMap(col => updatePlaylistHelper(col,playlist,id))
   }
 
   def deletePlaylist(playlistName: String): Future[WriteResult] = {
     val query = Json.obj(fields = "name" -> playlistName)
     collection.flatMap(_.delete.one(query))
+  }
+
+  def insertSongToPlaylist(id: Int, song: Song): Future[Option[Playlist]] = {
+    val query = Json.obj(fields = "id" -> id)
+
+    findPlaylist(id).map {
+      case Some(playlist) => {
+        val newSongs = song :: playlist.songs.filterNot(_.id == song.id)
+        Some(playlist.copy(songs = newSongs))
+      }
+      case None => None
+    } flatMap {
+      case Some(playlist) => updatePlaylist(id, playlist)
+      case None           => Future.successful(None)
+    }
   }
 
 }

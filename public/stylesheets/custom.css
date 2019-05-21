@@ -28,6 +28,37 @@ table.space {
     text-decoration: none;
 }
 
+.buttom{
+    background-color:Transparent;
+    border: none;
+}
+
+.listViaSong {
+    color: rgba(211, 3, 32, 0.95);
+    text-decoration: none;
+}
+
+.listViaAlbum {
+    color: rgba(211, 3, 32, 0.95);
+    text-decoration: none;
+}
+
+.scrollbar
+{
+    margin-left: 30px;
+    width: 650px;
+    float: left;
+    height: 200px;
+    background: #222222;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+}
+
+.force-overflow
+{
+    min-height: 450px;
+}
+
 body {
     min-height: 100vh;
     font-family: "proxima-nova", "Lato", sans-serif;

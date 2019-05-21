@@ -17,11 +17,11 @@ import views.html.catalogue_of_songs
 import views.html.helper.form
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
+import scala.util.{Failure, Random, Success}
 
 
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents,
+class MainController @Inject()(cc: ControllerComponents,
                                playlistService: PlaylistService,
                                catalogueService: CatalogueService,
                                playlistRepo: PlaylistRepo,
@@ -45,8 +45,8 @@ class HomeController @Inject()(cc: ControllerComponents,
       }
   }
 
-  def selectPlaylist(playlistName: String): Action[AnyContent] = Action.async {
-    playlistService.getPlaylist(playlistName).map {
+  def selectPlaylist(playlistId: Int): Action[AnyContent] = Action.async {
+    playlistService.getPlaylist(playlistId).map {
       case Some(playlist) => Ok(views.html.player(playlist))
       case None           => Ok(views.html.error_page())
     }
@@ -85,18 +85,33 @@ class HomeController @Inject()(cc: ControllerComponents,
           Future.successful(BadRequest(views.html.error_page()))
         },
         emptyPlaylist => {
-          val playlistData = Playlist.apply(emptyPlaylist.name, List.empty)
+          val playlistData = Playlist.apply(Random.nextInt(),emptyPlaylist.name, List.empty)
           playlistService.createPlaylist(playlistData)
-          //look at DC-1629 for clarity on how to construct two different case classes into one.
-          catalogueService.returnAllSongs().map(songs => Ok(views.html.catalogue_of_songs(emptyPlaylist.name,songs)))
+          catalogueService.returnAllSongs().map(songs => Ok(views.html.catalogue_of_songs(playlistData,songs)))
         }
       )
     }
   }
 
-  def insertSongToPlaylist(playlistTitle: String, songTitle: String):Action[AnyContent] = {
-    ???
-    //Ok()
-    //Ok(views.html.error_page)
+  def insertSongToPlaylist(playlistId: Int, songId: Int): Action[AnyContent] = Action.async {
+    for {
+      playlist <- playlistService.insertSongToPlaylist(playlistId, songId).map(_.get)
+      catalogueSongs <- catalogueService.returnAllSongs()
+      songs = catalogueSongs.diff(playlist.songs)
+    } yield Ok(views.html.catalogue_of_songs(playlist, songs))
+  }
+
+  def listViaAlbum(playlistId: Int): Action[AnyContent] = Action.async {
+    playlistService.getPlaylist(playlistId).map {
+      case Some(playlist) => Ok(views.html.list_via_album_title(playlist,playlist.songs.sortBy(_.album)))
+      case None           => Ok(views.html.error_page())
+    }
+  }
+
+  def listViaSong(playlistId: Int): Action[AnyContent] = Action.async {
+    playlistService.getPlaylist(playlistId).map {
+      case Some(playlist) => Ok(views.html.list_via_song_title(playlist,playlist.songs.sortBy(_.title)))
+      case None           => Ok(views.html.error_page())
+    }
   }
 }

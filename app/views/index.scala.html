@@ -4,12 +4,13 @@
 @main("My music player") {
         <div id="project-wrapper">
             <div id="project-container">
-                <div id="overlay"></div>
+                <div id="overlay">
                 <div id="content">
                     <h2>My Music Player</h2>
                     <h3>Main Playlist</h3>
                     @components.playlist_table(playlists)
                   <a class="createPlaylistButton" href="/create-playlist-page"> Create New Playlist</a>
+                </div>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 
 @(playlists: Seq[Playlist])
 @main("My music player") {
+  <div class="scrollbar">
   <table class="space">
     <thead>
       <tr>
@@ -11,11 +12,12 @@
     <tbody>
     @for(playlist <- playlists) {
       <tr class ="song">
-        <td><a href="/player/@{playlist.name}">@{
+        <td><a href="/player/@{playlist.id}">@{
           playlist.name
         }</a></td>
       </tr>
     }
     </tbody>
   </table>
+  </div>
 }

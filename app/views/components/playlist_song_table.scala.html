@@ -1,6 +1,6 @@
-@import model.Playlist
+@import model.Song
 
-@(playlist: Playlist)
+@(songs: List[Song])
 
 <div>
   <table class="space">
@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      @for(song <- playlist.songs) {
+      @for(song <- songs) {
         <tr class ="song">
           <td>
             <a href="@{song.location}">@{song.title}</a>

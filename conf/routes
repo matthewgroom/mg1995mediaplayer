@@ -1,17 +1,21 @@
-GET     /                                                         controllers.HomeController.index()
+GET     /                                                         controllers.MainController.index()
 
 GET     /assets/*file                                             controllers.Assets.versioned(path="/public", file: Asset)
 
-GET     /player/:playlist                                         controllers.HomeController.selectPlaylist(playlist: String)
+GET     /player/:playlist                                         controllers.MainController.selectPlaylist(playlist: Int)
 
-POST    /create-playlist                                          controllers.HomeController.createPlaylist()
+POST    /create-playlist                                          controllers.MainController.createPlaylist()
 
-GET     /error-page                                               controllers.HomeController.errorPage()
+GET     /error-page                                               controllers.MainController.errorPage()
 
-GET     /create-playlist-page                                     controllers.HomeController.createPlaylistPage()
+GET     /create-playlist-page                                     controllers.MainController.createPlaylistPage()
 
-POST    /create-catalogue                                         controllers.HomeController.insertCatalogue()
+POST    /create-catalogue                                         controllers.MainController.insertCatalogue()
 
-POST    /create-empty-playlist                                    controllers.HomeController.createEmptyPlaylist()
+POST    /create-empty-playlist                                    controllers.MainController.createEmptyPlaylist()
 
-POST    /insert-song-to-playlist/:playlistTitle/:songTitle        controllers.HomeController.insertSongToPlaylist(playlistTitle: String, songTitle: String)
+GET    /insert-song-to-playlist/:playlistId/:songId              controllers.MainController.insertSongToPlaylist(playlistId: Int, songId: Int)
+
+GET     /list-via-song/:playlistId                                controllers.MainController.listViaSong(playlistId: Int)
+
+GET     /list-via-album/:playlistId                               controllers.MainController.listViaAlbum(playlistId: Int)
