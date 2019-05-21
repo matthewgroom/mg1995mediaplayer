@@ -7,7 +7,6 @@ import scala.concurrent.Future
 import repository.PlaylistRepo
 
 import scala.concurrent.ExecutionContext
-import scala.util.{Failure, Random, Success}
 
 class PlaylistService @Inject()(components: ControllerComponents,
                                 playlistRepo: PlaylistRepo,
@@ -19,18 +18,6 @@ class PlaylistService @Inject()(components: ControllerComponents,
 
   def getPlaylist(id: Int) = {
     playlistRepo.findPlaylist(id)
-  }
-
-  def shuffle(playlist: Playlist, random: Random):Song = {
-    val songs = playlist.songs
-    Random.shuffle(songs).head
-  }
-
-  def updatePlaylist(id: Int, newPlaylist: Playlist) = {
-    playlistRepo.updatePlaylist(id, newPlaylist).map {
-      case Some(_) => Success
-      case None    => Failure
-    }
   }
 
   def findSongWithinPlaylist(playlist: Playlist, songName: String):List[Song] = {
@@ -47,4 +34,9 @@ class PlaylistService @Inject()(components: ControllerComponents,
       case None       => playlistRepo.findPlaylist(playlistId)
     }
   }
+
+  //  def shuffle(playlist: Playlist, random: Random):Song = {
+  //    val songs = playlist.songs
+  //    Random.shuffle(songs).head
+  //  }
 }

@@ -18,6 +18,8 @@ class PlaylistRepoSpec extends PlaySpec with MockitoSugar with GuiceOneAppPerSui
   val playlist1 = Playlist(1,"name",List(Song(1,"song","album","artist name","location",1995)))
   val playlist2 = Playlist(2,"name",List(Song(2,"song","album","artist name","location",1995)))
 
+  val song = Song(3,"song","album","matt","location",1997)
+
   "findAllPlaylists" should {
     "returns all playlists" in {
       await(mockPlaylistRepository.deleteAllPlaylists())
@@ -35,27 +37,11 @@ class PlaylistRepoSpec extends PlaySpec with MockitoSugar with GuiceOneAppPerSui
     }
   }
 
-  "updatePlaylistHelper" should {
-    "" in {
-
-    }
-  }
-
-  "updatePlaylist" should {
-    "" in {
-
-    }
-  }
-
-  "deletePlaylist" should {
-    "" in {
-
-    }
-  }
-
   "insertSongToPlaylist" should {
-    "" in {
-
+    "insert new song to existing playlist" in {
+      await(mockPlaylistRepository.deleteAllPlaylists())
+      await(mockPlaylistRepository.createPlaylist(playlist1))
+      await(mockPlaylistRepository.insertSongToPlaylist(1,song))
     }
   }
 
