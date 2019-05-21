@@ -46,11 +46,6 @@ class PlaylistRepo @Inject()(components: ControllerComponents,
     collection.flatMap(col => updatePlaylistHelper(col,playlist,id))
   }
 
-  def deletePlaylist(playlistName: String): Future[WriteResult] = {
-    val query = Json.obj(fields = "name" -> playlistName)
-    collection.flatMap(_.delete.one(query))
-  }
-
   def insertSongToPlaylist(id: Int, song: Song): Future[Option[Playlist]] = {
     val query = Json.obj(fields = "id" -> id)
 
@@ -64,6 +59,10 @@ class PlaylistRepo @Inject()(components: ControllerComponents,
       case Some(playlist) => updatePlaylist(id, playlist)
       case None           => Future.successful(None)
     }
+  }
+
+  def deleteAllPlaylists() = {
+    collection.flatMap(_.remove(Json.obj()))
   }
 
 }

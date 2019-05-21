@@ -20,19 +20,19 @@ class MainControllerSpec extends PlaySpec with MockitoSugar with GuiceOneAppPerS
 
   implicit val ec = ExecutionContext.global
 
-  val mockPlaylistService = mock[PlaylistService]
-  val mockCatalogueService = mock[CatalogueService]
-  implicit lazy val materializer: Materializer = app.materializer
-  implicit lazy val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+  private val mockPlaylistService = mock[PlaylistService]
+  private val mockCatalogueService = mock[CatalogueService]
+  private implicit lazy val materializer: Materializer = app.materializer
+  private implicit lazy val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
-  val injector = new GuiceApplicationBuilder()
+  private val injector = new GuiceApplicationBuilder()
     .overrides(bind[CatalogueService].to(mockCatalogueService))
     .overrides(bind[PlaylistService].to(mockPlaylistService))
     .injector()
 
   val controller = injector.instanceOf[MainController]
 
-  val fakeSongs = List(Song.apply(1, "bla", "bla", "bla", "////", 1995))
+  val fakeSongs = List(Song(1, "bla", "bla", "bla", "////", 1995))
 
   val fakeListOfPlaylist = List(Playlist.apply(id = 1, name = "bla", songs = fakeSongs))
 

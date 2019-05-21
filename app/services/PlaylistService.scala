@@ -47,23 +47,4 @@ class PlaylistService @Inject()(components: ControllerComponents,
       case None       => playlistRepo.findPlaylist(playlistId)
     }
   }
-
-//  def returnAllSongs() = {
-//    playlistRepo.findAllPlaylists().map(playlist => playlist.flatMap(_.songs))
-//  }
-
-//  def findSingleSong(songTitle: String) = {
-//    catalogueService.returnSingleSong(songTitle).map(song => List(song))
-//  }
-//
-//  def findPlaylist(playlistTitle: String) = {
-//    playlistRepo.findPlaylist(playlistTitle)
-//  }
-//
-//  def updatePlaylist(playlistTitle: String, songTitle: String) = {
-//    val song = findSingleSong(songTitle)
-//    findPlaylist(playlistTitle).map {
-//      case Some(playlist) => playlist.songs
-//    }
-//  }
 }

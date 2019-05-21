@@ -25,8 +25,14 @@ class CatalogueRepo @Inject()(components: ControllerComponents,
 
   implicit def collection: Future[JSONCollection] = database.map(_.collection[JSONCollection]("catalogue"))
 
+  //This method is only for creating a catalogue of songs for this application to work.
+  //This catalogue of songs will allow end users to choose specific songs and add them to their own playlist.
   def createCatalogue(catalogue: Catalogue): Future[WriteResult] = {
     collection.flatMap(_.insert.one(catalogue))
+  }
+  //This method is just used for testing the application
+  def removeAll() = {
+    collection.flatMap(_.remove(Json.obj()))
   }
 
   def returnCatalogue() = {
@@ -39,5 +45,6 @@ class CatalogueRepo @Inject()(components: ControllerComponents,
       case None => Future.successful(None)
     }
   }
+
 
 }
