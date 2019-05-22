@@ -8,10 +8,10 @@
     <div id="project-container">
       <div id="overlay"></div>
       <div id="content">
-        <h2>Select songs for you playlist</h2>
+        <h2>Select songs for your playlist</h2>
         <h3>Choose wisely</h3>
         <h3>@playlist.name</h3>
-        <div class="scrollbar">
+        <div class="scrollbar" id="scrollbar-style">
         <table class="space">
           <thead>
             <tr>
@@ -28,10 +28,10 @@
                 <a href="/insert-song-to-playlist/@{playlist.id}/@{song.id}">@{song.title}</a>
               </td>
               <td>
-              @{song.album}
+              @{song.artistName}
               </td>
               <td>
-              @{song.artistName}
+              @{song.album}
               </td>
               <td>
               @{song.yearCreated}
@@ -41,7 +41,7 @@
           </tbody>
         </table>
         </div>
-        <a class="createPlaylistButton" href="/">|| Return To Playlists</a>
+        <a class="createPlaylistButton" href="/"> Return To Playlists</a>
       </div>
     </div>
   </div>
