@@ -42,7 +42,7 @@ class MainControllerSpec extends PlaySpec with MockitoSugar with GuiceOneAppPerS
   val fakeSong = Song(1, "bla", "bla", "bla", "////", 1995)
 
   "Index" should {
-    "return the index page with a list of playlist or non at all" in {
+    "return the index page with a list of playlist or none at all" in {
       when(mockPlaylistService.returnAllPlaylist()).thenReturn(Future.successful(fakeListOfPlaylist))
       val result = call(controller.index(), fakeRequest)
       status(result) mustBe Status.OK

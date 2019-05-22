@@ -1,12 +1,11 @@
 package repository
 
-import model.{Catalogue, Playlist, Song}
+import model.{Playlist, Song}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.Helpers._
 
-import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContext
 
 class PlaylistRepoSpec extends PlaySpec with MockitoSugar with GuiceOneAppPerSuite  {
@@ -41,7 +40,7 @@ class PlaylistRepoSpec extends PlaySpec with MockitoSugar with GuiceOneAppPerSui
     "insert new song to existing playlist" in {
       await(mockPlaylistRepository.deleteAllPlaylists())
       await(mockPlaylistRepository.createPlaylist(playlist1))
-      await(mockPlaylistRepository.insertSongToPlaylist(1,song))
+      await(mockPlaylistRepository.insertSongToPlaylist(1,song)) mustBe Some(playlist1)
     }
   }
 

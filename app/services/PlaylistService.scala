@@ -20,10 +20,6 @@ class PlaylistService @Inject()(components: ControllerComponents,
     playlistRepo.findPlaylist(id)
   }
 
-  def findSongWithinPlaylist(playlist: Playlist, songName: String):List[Song] = {
-    playlist.songs.filter(_.title.contains(songName))
-  }
-
   def returnAllPlaylist() = {
     playlistRepo.findAllPlaylists()
   }
