@@ -93,4 +93,11 @@ class MainController @Inject()(cc: ControllerComponents,
       case None           => Ok(views.html.error_page())
     }
   }
+
+  def listViaRandom(playlistId: Int): Action[AnyContent] = Action.async {
+    playlistService.getPlaylist(playlistId).map{
+      case Some(playlist) => Ok(views.html.list_via_randomly(playlist,Random.shuffle(playlist.songs)))
+      case None           => Ok(views.html.error_page())
+    }
+  }
 }

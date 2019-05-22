@@ -17,3 +17,5 @@ GET     /insert-song-to-playlist/:playlistId/:songId              controllers.Ma
 GET     /list-via-song/:playlistId                                controllers.MainController.listViaSong(playlistId: Int)
 
 GET     /list-via-album/:playlistId                               controllers.MainController.listViaAlbum(playlistId: Int)
+
+GET     /list-via-random/:playlistId                              controllers.MainController.listViaRandom(playlistId: Int)

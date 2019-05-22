@@ -3,10 +3,12 @@ package services
 import com.google.inject.Inject
 import model.{Playlist, Song}
 import play.api.mvc.{AbstractController, ControllerComponents}
+
 import scala.concurrent.Future
 import repository.PlaylistRepo
 
 import scala.concurrent.ExecutionContext
+import scala.util.Random
 
 class PlaylistService @Inject()(components: ControllerComponents,
                                 playlistRepo: PlaylistRepo,
@@ -31,8 +33,8 @@ class PlaylistService @Inject()(components: ControllerComponents,
     }
   }
 
-  //  def shuffle(playlist: Playlist, random: Random):Song = {
-  //    val songs = playlist.songs
-  //    Random.shuffle(songs).head
-  //  }
+    def shuffle(playlist: Playlist, random: Random):Song = {
+      val songs = playlist.songs
+      Random.shuffle(songs).head
+    }
 }

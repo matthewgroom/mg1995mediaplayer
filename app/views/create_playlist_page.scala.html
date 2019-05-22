@@ -10,10 +10,7 @@
       <div id="content">
         <h2>Create Your New playlist</h2>
         <h3>Make it yours!</h3>
-        @helper.form(routes.MainController.createEmptyPlaylist) {
-          <input type="text" id="name" name="name" value="">
-          <button id="button" type="submit">Create Playlist</button>
-        }
+        @components.create_playlist_button()
       </div>
       <div>
       </div>

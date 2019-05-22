@@ -1,6 +1,9 @@
 @import model.Song
+@import model.Playlist
 
-@(songs: Seq[Song])
+@import model.Catalogue
+@(playlist: Playlist, catalogueSongs: Seq[Song])
+
 <table class="space">
   <thead>
     <tr>
@@ -11,27 +14,19 @@
     </tr>
   </thead>
   <tbody>
-  @for(song <- songs) {
+  @for(song <- catalogueSongs) {
     <tr class ="song">
       <td>
-      @{
-        song.title
-      }
+        <a href="/insert-song-to-playlist/@{playlist.id}/@{song.id}">@{song.title}</a>
       </td>
       <td>
-      @{
-        song.album
-      }
+      @{song.artistName}
       </td>
       <td>
-      @{
-        song.artistName
-      }
+      @{song.album}
       </td>
       <td>
-      @{
-        song.yearCreated
-      }
+      @{song.yearCreated}
       </td>
     </tr>
   }

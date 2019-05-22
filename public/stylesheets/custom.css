@@ -45,6 +45,11 @@ body #project-wrapper #project-container #content #buttom{
     text-decoration: none;
 }
 
+.playlistList {
+    color: rgba(211, 3, 32, 0.95);
+    text-decoration: none;
+}
+
 .scrollbar
 {
     margin-left: 30px;

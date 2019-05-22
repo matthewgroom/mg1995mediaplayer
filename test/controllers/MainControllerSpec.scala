@@ -128,4 +128,18 @@ class MainControllerSpec extends PlaySpec with MockitoSugar with GuiceOneAppPerS
     }
   }
 
+  "listViaRandom" should {
+    "return 200 if playlist is found" in {
+      when(mockPlaylistService.getPlaylist(1)).thenReturn(Future(Some(fakePlaylist)))
+      val result = call(controller.listViaRandom(1), fakeRequest)
+      status(result) mustBe Status.OK
+    }
+
+    "return 200 if playlist isn't found" in {
+      when(mockPlaylistService.getPlaylist(1)).thenReturn(Future(None))
+      val result = call(controller.listViaRandom(1), fakeRequest)
+      status(result) mustBe Status.OK
+    }
+  }
+
 }

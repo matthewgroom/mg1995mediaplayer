@@ -13,16 +13,17 @@
             <audio src="" controls id="audioPlayer">
               If you're reading this your browser does not support my player.
             </audio>
-            <button onclick="window.location.href='/shuffle';"class="column active list__link "><i class="fa fa-random" aria-hidden="true"></i></button>
+            <button onclick="window.location.href='/list-via-random/@{playlist.id}';"class="column active list__link "><i class="fa fa-random" aria-hidden="true"></i></button>
           </div>
           <div class="scrollbar" id="scrollbar-style">
             <div class="force-overflow">
-          @components.playlist_song_table(playlist.songs)
+          @components.song_table(playlist.songs)
             </div>
           </div>
           <a class="listViaSong" href="/list-via-song/@{playlist.id}">List By Song ||</a>
           <a class="listViaAlbum" href="/list-via-album/@{playlist.id}">|| List By Album ||</a>
-          <a class="createPlaylistButton" href="/create-playlist-page">|| Create New Playlist</a>
+          <a class="createPlaylistButton" href="/create-playlist-page">|| Create New Playlist ||</a>
+          <a class="playlistList" href="/">|| All Playlist's</a>
         </div>
         <script>
                 audioPlayer();
