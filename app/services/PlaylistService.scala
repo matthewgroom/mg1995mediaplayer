@@ -16,13 +16,13 @@ class PlaylistService @Inject()(components: ControllerComponents,
 
   implicit val ec = ExecutionContext.global
 
-  def createPlaylist(playlist: Playlist)= playlistRepo.createPlaylist(playlist).map(_.ok)
+  def createPlaylist(playlist: Playlist): Future[Boolean] = playlistRepo.createPlaylist(playlist).map(_.ok)
 
-  def getPlaylist(id: Int) = {
+  def getPlaylist(id: Int): Future[Option[Playlist]] = {
     playlistRepo.findPlaylist(id)
   }
 
-  def returnAllPlaylist() = {
+  def returnAllPlaylist(): Future[Seq[Playlist]] = {
     playlistRepo.findAllPlaylists()
   }
 
@@ -32,9 +32,4 @@ class PlaylistService @Inject()(components: ControllerComponents,
       case None       => playlistRepo.findPlaylist(playlistId)
     }
   }
-
-    def shuffle(playlist: Playlist, random: Random):Song = {
-      val songs = playlist.songs
-      Random.shuffle(songs).head
-    }
 }

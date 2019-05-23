@@ -1,11 +1,12 @@
 package controllers
 
 import javax.inject._
-import model.{Catalogue, EmptyPlaylist, Playlist}
+import model.{Catalogue, EmptyPlaylist, Playlist, Song}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 import play.api.mvc.{Action, AnyContent, _}
+import repository.{CatalogueRepo, PlaylistRepo}
 import services.{CatalogueService, PlaylistService}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -16,6 +17,8 @@ import scala.util.Random
 class MainController @Inject()(cc: ControllerComponents,
                                playlistService: PlaylistService,
                                catalogueService: CatalogueService,
+                               playlistRepo: PlaylistRepo,
+                               catalogueRepo: CatalogueRepo
                               ) extends AbstractController(cc) {
   implicit val ec = ExecutionContext.global
 
