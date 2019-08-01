@@ -30,11 +30,15 @@ class PlaylistRepo @Inject()(components: ControllerComponents,
   }
 
   def findAllPlaylists():Future[Seq[Playlist]] = {
-    collection.flatMap(_.find(Json.obj(), Some(BSONDocument.empty)).cursor[Playlist]().collect[Seq](200000, Cursor.FailOnError[Seq[Playlist]]()))
+    collection
+      .flatMap(_.find(Json.obj(), Some(BSONDocument.empty))
+      .cursor[Playlist]()
+      .collect[Seq](200000, Cursor.FailOnError[Seq[Playlist]]()))
   }
 
   def findPlaylist(id: Int): Future[Option[Playlist]] = {
-    collection.flatMap(_.find(Json.obj(fields = "id" -> id), Option.empty[JsObject]).one[Playlist])
+    collection
+      .flatMap(_.find(Json.obj(fields = "id" -> id), Option.empty[JsObject]).one[Playlist])
   }
 
   def updatePlaylistHelper(col: JSONCollection, playlist: Playlist, id: Int): Future[Option[Playlist]] = {
